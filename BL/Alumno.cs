@@ -177,9 +177,9 @@ namespace BL
                         cmd.Connection = context;
                         cmd.CommandText = query;
                         cmd.CommandType = CommandType.StoredProcedure;
-                    
 
-                        SqlParameter[] collection = new SqlParameter[4];
+
+                        SqlParameter[] collection = new SqlParameter[5];
 
                         collection[0] = new SqlParameter("Nombre", SqlDbType.VarChar);
                         collection[0].Value = alumno.Nombre;
@@ -192,6 +192,9 @@ namespace BL
 
                         collection[3] = new SqlParameter("Email", SqlDbType.VarChar);
                         collection[3].Value = alumno.Email;
+
+                        collection[4] = new SqlParameter("IdSemestre", SqlDbType.Int);
+                        collection[4].Value = alumno.Semestre.IdSemestre;
 
                         cmd.Parameters.AddRange(collection);
                         cmd.Connection.Open();
@@ -217,6 +220,64 @@ namespace BL
 
             return result;
 
+        }
+
+        public static ML.Result GetAllSP()
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using(SqlConnection  context = new SqlConnection(DL.Conexion.Get()))
+                {
+                    string query = "AlumnoGetAll";
+                    using(SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = context;
+                        cmd.CommandText = query;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        DataTable tableAlumno = new DataTable();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                        da.Fill(tableAlumno);
+
+                        if(tableAlumno.Rows.Count > 0)
+                        {
+                            result.Objects = new List<object>();
+
+                            foreach (DataRow row in tableAlumno.Rows)
+                            {
+                                ML.Alumno alummno = new ML.Alumno();
+
+                                alummno.IdAlumno = int.Parse(row[0].ToString());
+                                alummno.Nombre = row[1].ToString();
+                                alummno.ApellidoPaterno = row[2].ToString();
+                                alummno.ApellidoMaterno = row[3].ToString();
+                                alummno.Email = row[4].ToString();
+
+                                alummno.Semestre = new ML.Semestre();
+                                alummno.Semestre.IdSemestre = int.Parse(row[5].ToString());
+
+                                result.Objects.Add(alummno);
+
+                            }
+                            result.Correct = true;
+                            
+                        }
+                        else
+                        {
+                            result.Correct = false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
         }
           
     }

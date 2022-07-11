@@ -25,6 +25,11 @@ namespace PL
             Console.WriteLine("Ingrese el Email");
             alumno.Email = Console.ReadLine();
 
+            alumno.Semestre = new ML.Semestre(); //instacia de clase de semestre
+
+            Console.WriteLine("Ingrese el id del semestre: ");
+            alumno.Semestre.IdSemestre = int.Parse(Console.ReadLine());
+
 
             //ML.Result result = BL.Alumno.Add(alumno);
             ML.Result result = BL.Alumno.AddSP(alumno);
@@ -91,6 +96,32 @@ namespace PL
                 Console.WriteLine("Ocurrio un error al eliminar el registro");
             }
         }
+
+        public static void GetAll()
+        {
+            ML.Result result = BL.Alumno.GetAllSP();
+
+            if(result.Correct)
+            {
+                foreach(ML.Alumno alumno in result.Objects)
+                {
+                    Console.WriteLine("IdAlumno: " + alumno.IdAlumno);
+                    Console.WriteLine("Nombre: " + alumno.Nombre);
+                    Console.WriteLine("ApellidoPaterno: " + alumno.ApellidoPaterno);
+                    Console.WriteLine("ApellidoMaterno: " + alumno.ApellidoMaterno);
+                    Console.WriteLine("Email: " + alumno.Email);
+                  
+                    Console.WriteLine("IdSemestre: " + alumno.Semestre.IdSemestre);
+                    Console.WriteLine("---------------------------------------------");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Ocurrio un error al realizar la consulta ");
+            }
+        }
+        
+        
 
 
     }
