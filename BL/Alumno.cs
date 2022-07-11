@@ -279,6 +279,70 @@ namespace BL
             }
             return result;
         }
+
+       public static ML.Result GetByIdSP(int IdAlumno)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using(SqlConnection context = new SqlConnection(DL.Conexion.Get()))
+                {
+                    string query = "AlumnoGetById";
+
+                    using(SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = context;
+                        cmd.CommandText = query;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        SqlParameter[] collection = new SqlParameter[1];
+                        
+                        collection[0] = new SqlParameter("IdAlumno", SqlDbType.Int);
+                        collection[0].Value = IdAlumno;
+
+                        cmd.Parameters.AddRange(collection);
+
+                        DataTable tableAlumno = new DataTable();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(tableAlumno);
+
+                        if(tableAlumno.Rows.Count > 0)
+                        {
+                            DataRow row = tableAlumno.Rows[0];
+
+                            ML.Alumno alumno = new ML.Alumno();
+                            alumno.IdAlumno = int.Parse(row[0].ToString());
+                            alumno.Nombre = row[1].ToString();
+                            alumno.ApellidoPaterno = row[2].ToString();
+                            alumno.ApellidoMaterno = row[3].ToString();
+                            alumno.Email = row[4].ToString();
+
+                            alumno.Semestre = new ML.Semestre();
+
+                            alumno.Semestre.IdSemestre = int.Parse(row[5].ToString());
+
+                            result.Object = alumno; //BOXING 
+
+                            result.Correct = true;
+                        }
+                        else
+                        {
+                            result.Correct = false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct=false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
+        
+
+        
           
     }
 }

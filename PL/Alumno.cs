@@ -120,6 +120,30 @@ namespace PL
                 Console.WriteLine("Ocurrio un error al realizar la consulta ");
             }
         }
+
+        public static void GetById()
+        {
+            Console.WriteLine("Ingrese el Id a consultar");
+            ML.Result result = BL.Alumno.GetByIdSP(int.Parse(Console.ReadLine()));
+
+            if(result.Correct)
+            {
+                ML.Alumno alumno = ((ML.Alumno)result.Object); //UNBOXING
+
+                Console.WriteLine("IdAlumno: " + alumno.IdAlumno);
+                Console.WriteLine("Nombre: " + alumno.Nombre);
+                Console.WriteLine("ApellidoPaterno: " + alumno.ApellidoPaterno);
+                Console.WriteLine("ApellidoMaterno: " + alumno.ApellidoMaterno);
+                Console.WriteLine("Email: " + alumno.Email);
+                Console.WriteLine("IdSemestre: " + alumno.Semestre.IdSemestre);
+
+                
+            }
+            else
+            {
+                Console.WriteLine("Ocurrio un error al realizar la consulta" + result.ErrorMessage);
+            }
+        }
         
         
 
