@@ -32,7 +32,8 @@ namespace PL
 
 
             //ML.Result result = BL.Alumno.Add(alumno);
-            ML.Result result = BL.Alumno.AddSP(alumno);
+            //ML.Result result = BL.Alumno.AddSP(alumno);
+            ML.Result result = BL.Alumno.AddEF(alumno);
 
             if (result.Correct)
             {
@@ -99,7 +100,8 @@ namespace PL
 
         public static void GetAll()
         {
-            ML.Result result = BL.Alumno.GetAllSP();
+            //ML.Result result = BL.Alumno.GetAllSP();
+            ML.Result result = BL.Alumno.GetAllEF();
 
             if(result.Correct)
             {
@@ -124,7 +126,7 @@ namespace PL
         public static void GetById()
         {
             Console.WriteLine("Ingrese el Id a consultar");
-            ML.Result result = BL.Alumno.GetByIdSP(int.Parse(Console.ReadLine()));
+            ML.Result result = BL.Alumno.GetByIdEF(int.Parse(Console.ReadLine()));
 
             if(result.Correct)
             {

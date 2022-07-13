@@ -280,7 +280,7 @@ namespace BL
             return result;
         }
 
-       public static ML.Result GetByIdSP(int IdAlumno)
+        public static ML.Result GetByIdSP(int IdAlumno)
         {
             ML.Result result = new ML.Result();
 
@@ -340,7 +340,116 @@ namespace BL
             }
             return result;
         }
+
         
+        public static ML.Result AddEF(ML.Alumno alumno)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
+                {
+                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.Email, alumno.Semestre.IdSemestre);
+
+                    if(query > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage=ex.Message;
+            }
+
+            return result;
+        }
+
+        public static ML.Result GetAllEF()
+        {
+            ML.Result  result=new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
+                {
+                    var query = context.AlumnoGetAll().ToList();
+                    result.Objects = new List<object>();
+
+                    if(query != null)
+                    {
+                        foreach(var obj in query)
+                        {
+                            ML.Alumno alumno = new ML.Alumno();
+                            alumno.IdAlumno = obj.IdAlumno;
+                            alumno.Nombre = obj.Nombre;
+                            alumno.ApellidoPaterno = obj.ApellidoPaterno;
+                            alumno.ApellidoMaterno = obj.ApellidoMaterno;
+                            alumno.Email = obj.Email;
+
+                            alumno.Semestre = new ML.Semestre();
+                            alumno.Semestre.IdSemestre =obj.IdSemestre.Value;
+
+                            result.Objects.Add(alumno);
+                        }
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;   
+            }
+
+            return result;
+        }
+
+        public static ML.Result GetByIdEF(int IdAlumno)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
+                {
+                    var objAlumno = context.AlumnoGetById(IdAlumno).FirstOrDefault();
+
+                    if (objAlumno != null)
+                    {
+                        ML.Alumno alumno = new ML.Alumno();
+                        alumno.IdAlumno = objAlumno.IdAlumno;
+                        alumno.Nombre = objAlumno.Nombre;
+                        alumno.ApellidoPaterno = objAlumno.ApellidoPaterno;
+                        alumno.Email = objAlumno.Email;
+
+                        alumno.Semestre = new ML.Semestre();
+                        alumno.Semestre.IdSemestre = objAlumno.IdSemestre.Value;
+
+                        result.Object = alumno;
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
 
         
           
