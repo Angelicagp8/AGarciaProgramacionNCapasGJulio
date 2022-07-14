@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using ML;
+using System.Linq;
 
 namespace BL
 {
@@ -451,6 +452,101 @@ namespace BL
             return result;
         }
 
+        public static ML.Result AddLINQ(ML.Alumno alumno)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
+                {
+                    DL_EF.Alumno alumnoLinq = new DL_EF.Alumno();
+
+                    alumnoLinq.Nombre = alumno.Nombre;
+                    alumnoLinq.ApellidoPaterno = alumno.ApellidoPaterno;
+                    alumnoLinq.ApellidoMaterno = alumno.ApellidoMaterno;
+                    alumnoLinq.Email = alumno.Email;
+
+                    //alumno.Semestre = new ML.Semestre();
+                    alumnoLinq.IdSemestre  = alumno.Semestre.IdSemestre;
+
+                    if(alumnoLinq != null)
+                    {
+                        context.Alumnoes.Add(alumnoLinq);
+                        context.SaveChanges();
+                        result.Correct =true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+
+                }
+            }
+            catch(Exception ex)
+            {
+                result.Correct = true;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
+
+        public static ML.Result GetAllLINQ()
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
+                {
+                    var AlumnoList = (from alumno in context.Alumnoes //select * From Usuario
+                                      select new
+                                      {
+                                          alumno.IdAlumno,
+                                          alumno.Nombre,
+                                          alumno.ApellidoPaterno,
+                                          alumno.ApellidoMaterno,
+                                          alumno.Email,
+                                          alumno.IdSemestre
+                                      }
+                                      ).ToList();
+
+                    if(AlumnoList.Count > 1)
+                    {
+                        result.Objects = new List<object>();
+                        foreach(var alumno in AlumnoList)
+                        {
+                            ML.Alumno alumnoItem = new ML.Alumno();
+
+                            alumnoItem.IdAlumno = alumno.IdAlumno;
+                            alumnoItem.Nombre = alumno.Nombre;
+                            alumnoItem.ApellidoPaterno = alumno.ApellidoPaterno;
+                            alumnoItem.ApellidoMaterno = alumno.ApellidoMaterno;
+                            alumnoItem.Email = alumno.Email;
+                            alumnoItem.Semestre = new ML.Semestre();
+                            alumnoItem.Semestre.IdSemestre = alumno.IdSemestre.Value;
+
+                            //usuarioLinq.FechaNacimiento = DateTime.ParseExact(usuario.FechaNacimiento, "dd-MM-yyy",CultureInfo.InvariantCulture)
+
+                            result.Objects.Add(alumnoItem);
+
+                        }
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
         
           
     }
