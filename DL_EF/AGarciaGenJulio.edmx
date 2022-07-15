@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AGarciaGenJulioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AGarciaGenJulioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Alumno">
           <Key>
             <PropertyRef Name="IdAlumno" />
@@ -54,8 +54,7 @@
             <End Role="Alumno" EntitySet="Alumno" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AGarciaGenJulioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -98,16 +97,16 @@
             <End Role="Semestre" EntitySet="Semestres" />
             <End Role="Alumno" EntitySet="Alumnoes" />
           </AssociationSet>
+          <FunctionImport Name="AlumnoGetAll" ReturnType="Collection(AGarciaGenJulioModel.AlumnoGetAll_Result)" />
+          <FunctionImport Name="AlumnoGetById" ReturnType="Collection(AGarciaGenJulioModel.AlumnoGetById_Result)">
+          <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="AlumnoAdd">
             <Parameter Name="Nombre" Mode="In" Type="String" />
             <Parameter Name="ApellidoPaterno" Mode="In" Type="String" />
             <Parameter Name="ApellidoMaterno" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="IdSemestre" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="AlumnoGetAll" ReturnType="Collection(AGarciaGenJulioModel.AlumnoGetAll_Result)" />
-          <FunctionImport Name="AlumnoGetById" ReturnType="Collection(AGarciaGenJulioModel.AlumnoGetById_Result)">
-            <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="AlumnoGetAll_Result">
@@ -152,7 +151,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AlumnoAdd" FunctionName="AGarciaGenJulioModel.Store.AlumnoAdd" />
           <FunctionImportMapping FunctionImportName="AlumnoGetAll" FunctionName="AGarciaGenJulioModel.Store.AlumnoGetAll">
             <ResultMapping>
               <ComplexTypeMapping TypeName="AGarciaGenJulioModel.AlumnoGetAll_Result">
@@ -177,6 +175,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AlumnoAdd" FunctionName="AGarciaGenJulioModel.Store.AlumnoAdd" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -547,6 +547,47 @@ namespace BL
 
             return result;
         }
+
+        public static ML.Result GetByIdLINQ (int IdAlumno)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
+                {
+                    var obj = context.AlumnoGetById(IdAlumno).FirstOrDefault();
+
+                    if(obj != null)
+                    {
+                        ML.Alumno alumno = new ML.Alumno();
+
+                        alumno.IdAlumno = obj.IdAlumno;
+                        alumno.Nombre = obj.Nombre;
+                        alumno.ApellidoPaterno = obj.ApellidoPaterno;
+                        alumno.ApellidoMaterno = obj.ApellidoMaterno;
+                        alumno.Email = obj.Email;
+
+                        alumno.Semestre = new ML.Semestre();
+                        alumno.Semestre.IdSemestre = obj.IdSemestre.Value;
+
+                        result.Object = alumno;
+                        result.Correct = true;
+
+
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
         
           
     }

@@ -128,7 +128,7 @@ namespace PL
         public static void GetById()
         {
             Console.WriteLine("Ingrese el Id a consultar");
-            ML.Result result = BL.Alumno.GetByIdEF(int.Parse(Console.ReadLine()));
+            ML.Result result = BL.Alumno.GetByIdLINQ(int.Parse(Console.ReadLine()));
 
             if(result.Correct)
             {
