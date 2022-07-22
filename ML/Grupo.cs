@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ML
 {
-    public class Semestre
+    public class Grupo
     {
-        public int IdSemestre { get; set; }
+        public int IdGrupo { get; set; }
         public string Nombre { get; set; }
-        public List<object> Semestres { get; set; }
+        public ML.Plantel Plantel { get; set; }
+        public List<Object> Grupos { get; set; }
     }
 }

@@ -15,5 +15,6 @@ namespace ML
         public string Email { get; set; }
         public ML.Semestre Semestre { get; set; }
         public List<object> Alumnos { get; set; }
+        public ML.Horario  Horario { get; set; }
     }
 }

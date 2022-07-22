@@ -10,20 +10,16 @@
 namespace DL_EF
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class AlumnoGetAll_Result
+    public partial class Horario
     {
-        public int IdAlumno { get; set; }
-        public string NombreAlumno { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> IdSemestre { get; set; }
         public int IdHorario { get; set; }
         public string Turno { get; set; }
         public Nullable<int> IdGrupo { get; set; }
-        public string NombreGrupo { get; set; }
-        public Nullable<int> IdPlantel { get; set; }
-        public string NombrePlantel { get; set; }
+        public Nullable<int> IdAlumno { get; set; }
+    
+        public virtual Alumno Alumno { get; set; }
+        public virtual Grupo Grupo { get; set; }
     }
 }

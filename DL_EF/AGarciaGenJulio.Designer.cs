@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\digis\Documents\AGarcia\GENERACIONES\Generación Julio\AGarciaProgramacionNCapas\DL_EF\AGarciaGenJulio.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\digis\Desktop\Generación Julio\AGarciaProgramacionNCapas\DL_EF\AGarciaGenJulio.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

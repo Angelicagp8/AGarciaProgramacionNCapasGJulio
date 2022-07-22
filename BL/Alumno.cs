@@ -351,7 +351,7 @@ namespace BL
             {
                 using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
                 {
-                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.Email, alumno.Semestre.IdSemestre);
+                    var query = context.AlumnoAdd(alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.Email, alumno.Semestre.IdSemestre, alumno.Horario.Turno, alumno.Horario.Grupo.IdGrupo);
 
                     if(query > 0)
                     {
@@ -388,13 +388,23 @@ namespace BL
                         {
                             ML.Alumno alumno = new ML.Alumno();
                             alumno.IdAlumno = obj.IdAlumno;
-                            alumno.Nombre = obj.Nombre;
+                            alumno.Nombre = obj.NombreAlumno;
                             alumno.ApellidoPaterno = obj.ApellidoPaterno;
                             alumno.ApellidoMaterno = obj.ApellidoMaterno;
                             alumno.Email = obj.Email;
 
                             alumno.Semestre = new ML.Semestre();
                             alumno.Semestre.IdSemestre =obj.IdSemestre.Value;
+                            //alumno.Semestre.Nombre = obj.NombreSemestre;
+                            alumno.Horario = new ML.Horario();
+                            alumno.Horario.IdHorario = obj.IdHorario;
+                            alumno.Horario.Turno = obj.Turno;
+                            alumno.Horario.Grupo = new ML.Grupo();
+                            alumno.Horario.Grupo.IdGrupo = obj.IdGrupo.Value;
+                            alumno.Horario.Grupo.Nombre = obj.NombreGrupo;
+                            alumno.Horario.Grupo.Plantel = new ML.Plantel();
+                            alumno.Horario.Grupo.Plantel.IdPlantel = obj.IdPlantel.Value;
+                            alumno.Horario.Grupo.Plantel.Nombre = obj.NombrePlantel;
 
                             result.Objects.Add(alumno);
                         }
@@ -430,12 +440,13 @@ namespace BL
                         alumno.IdAlumno = objAlumno.IdAlumno;
                         alumno.Nombre = objAlumno.Nombre;
                         alumno.ApellidoPaterno = objAlumno.ApellidoPaterno;
+                        alumno.ApellidoMaterno = objAlumno.ApellidoMaterno;
                         alumno.Email = objAlumno.Email;
 
                         alumno.Semestre = new ML.Semestre();
                         alumno.Semestre.IdSemestre = objAlumno.IdSemestre.Value;
 
-                        result.Object = alumno;
+                        result.Object = alumno; //boxing
                         result.Correct = true;
                     }
                     else
@@ -588,6 +599,36 @@ namespace BL
             }
             return result;
         }
+
+        public static ML.Result UpdateEF(ML.Alumno alumno)
+        {
+            ML.Result result = new ML.Result();
+            try
+            {
+                using(DL_EF.AGarciaGenJulioEntities context = new DL_EF.AGarciaGenJulioEntities())
+                {
+                    var query = context.AlumnoUpdate(alumno.IdAlumno, alumno.Nombre, alumno.ApellidoPaterno, alumno.ApellidoMaterno, alumno.Email, alumno.Semestre.IdSemestre);
+                    if(query > 0)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "Alumno no actualizado";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = true;
+                result.ErrorMessage = ex.Message;
+                result.Ex = ex;
+            }
+            return result;
+        }
+
+       
         
           
     }

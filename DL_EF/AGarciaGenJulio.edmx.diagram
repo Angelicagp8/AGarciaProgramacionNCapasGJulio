@@ -8,6 +8,12 @@
         <EntityTypeShape EntityType="AGarciaGenJulioModel.Alumno" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="AGarciaGenJulioModel.Semestre" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="AGarciaGenJulioModel.FK__Alumno__IdSemest__267ABA7A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AGarciaGenJulioModel.Grupo" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="AGarciaGenJulioModel.Horario" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="AGarciaGenJulioModel.Plantel" Width="1.5" PointX="0.75" PointY="5.5" />
+        <AssociationConnector Association="AGarciaGenJulioModel.FK__Horario__IdAlumn__3E52440B" />
+        <AssociationConnector Association="AGarciaGenJulioModel.FK__Grupo__IdPlantel__3A81B327" />
+        <AssociationConnector Association="AGarciaGenJulioModel.FK__Horario__IdGrupo__3D5E1FD2" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

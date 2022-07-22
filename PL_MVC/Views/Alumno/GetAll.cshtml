@@ -30,10 +30,13 @@
             <td class="hidden">IdUsuario</td>
             <td>Nombre</td>
             <td>Email</td>
-            <td>IdSemestre</td>
+            <td>Semestre</td>
+            <td>Horario</td>
+            <td>Grupo</td>
+            <td>Plantel</td>
             <td>Eliminar</td>
         </tr>
-    </thead>
+    </thead>    
     <tbody>
         @foreach (ML.Alumno alumno in Model.Alumnos)
         {
@@ -42,7 +45,10 @@
                 <td class="hidden">@alumno.IdAlumno</td>
                 <td>@alumno.Nombre @alumno.ApellidoPaterno @alumno.ApellidoMaterno</td>
                 <td>@alumno.Email</td>
-                <td>@alumno.Semestre.IdSemestre</td>
+                <td>@alumno.Semestre.Nombre</td>
+                <td>@alumno.Horario.Turno</td>
+                <td>@alumno.Horario.Grupo.Nombre</td>
+                <td>@alumno.Horario.Grupo.Plantel.IdPlantel</td>
                 
                 <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Alumno", new { IdAlumno= alumno.IdAlumno})" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
             </tr>

@@ -66,7 +66,7 @@ namespace PL
             Console.WriteLine("Ingresa el email");
             alumno.Email = Console.ReadLine();
 
-            ML.Result result = BL.Alumno.Update(alumno);
+            ML.Result result = BL.Alumno.UpdateEF(alumno);
 
             if (result.Correct)
             {

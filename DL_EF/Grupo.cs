@@ -12,22 +12,19 @@ namespace DL_EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Alumno
+    public partial class Grupo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Alumno()
+        public Grupo()
         {
             this.Horarios = new HashSet<Horario>();
         }
     
-        public int IdAlumno { get; set; }
+        public int IdGrupo { get; set; }
         public string Nombre { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> IdSemestre { get; set; }
+        public Nullable<int> IdPlantel { get; set; }
     
-        public virtual Semestre Semestre { get; set; }
+        public virtual Plantel Plantel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Horario> Horarios { get; set; }
     }
